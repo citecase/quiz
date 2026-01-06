@@ -45,84 +45,126 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
         }
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center py-12 px-4">
 
     <!-- Header -->
-    <header class="max-w-3xl w-full text-center mb-12">
+    <header class="max-w-3xl w-full text-center mb-10">
         <h1 class="serif text-5xl text-slate-900 mb-2">CiteCase Quiz</h1>
-        <p class="text-blue-700 font-semibold uppercase tracking-widest text-sm">Quiz Based On Latest Supreme Court Judgments</p>
+        <p class="text-blue-700 font-semibold uppercase tracking-widest text-sm">ON LATEST SUPREME COURT JUDGMENTS</p>
         <div class="h-1.5 w-20 bg-slate-900 mx-auto mt-4 rounded-full"></div>
     </header>
 
     <main class="max-w-2xl w-full">
         <!-- Start Screen -->
-        <div id="start-screen" class="text-center py-10">
-            <button id="start-btn" class="bg-slate-900 hover:bg-slate-800 text-white text-lg font-bold py-4 px-12 rounded-full shadow-xl transition-all duration-200 transform hover:scale-105">
+        <div id="start-screen" class="text-center py-6 flex flex-col items-center gap-4">
+            <button id="main-start-btn" class="w-full max-w-sm bg-slate-900 hover:bg-slate-800 text-white text-lg font-bold py-4 px-12 rounded-full shadow-xl transition-all duration-200 transform hover:scale-105">
                 Start Quiz
             </button>
-            <p class="mt-6 text-slate-500 text-sm italic">Based on the Daily Digest - 05 January 2026</p>
-            <div class="mt-4 text-xs text-slate-400 font-medium">
-                Correct: +2 | Incorrect: -1 | Skip: 0
+            <a href="https://www.caseciter.com/tag/daily-digest/" target="_blank" class="w-full max-w-sm bg-white border-2 border-slate-900 text-slate-900 text-lg font-bold py-4 px-12 rounded-full shadow-md hover:bg-slate-50 transition-all duration-200 flex items-center justify-center gap-2">
+                <span>Read Daily Digests</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+            </a>
+            <button id="rules-toggle-btn" class="w-full max-w-sm bg-white border-2 border-slate-200 text-slate-600 text-lg font-bold py-4 px-12 rounded-full shadow-sm hover:border-slate-400 transition-all duration-200 flex items-center justify-center gap-2">
+                <span>Read Rules</span>
+                <svg id="rules-icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </button>
+            <div id="rules-container" class="hidden bg-white rounded-3xl shadow-xl p-8 border border-slate-100 w-full max-w-lg text-left mt-2 animate-fade-in">
+                <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2 uppercase tracking-tight">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Quiz Rules
+                </h3>
+                <ul class="space-y-3 text-sm text-slate-600 font-medium">
+                    <li class="flex items-start gap-3"><span class="bg-green-100 text-green-700 px-2 rounded font-bold">+2</span><span>Marks for every Correct Answer.</span></li>
+                    <li class="flex items-start gap-3"><span class="bg-red-100 text-red-700 px-2 rounded font-bold">-1</span><span>Mark for every Incorrect Answer or Timeout.</span></li>
+                    <li class="flex items-start gap-3"><span class="bg-slate-100 text-slate-700 px-2 rounded font-bold">0</span><span>Marks if you use the 'Skip' lifeline.</span></li>
+                    <li class="flex items-start gap-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        <span>30 Seconds per question.</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                        <span>3 Lifelines available: Time Extension, 50:50, and Skip.</span>
+                    </li>
+                    <li class="flex items-start gap-3 border-t border-slate-100 pt-2 text-amber-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                        <span>Report quiz discrepancies while submitting scores.</span>
+                    </li>
+                </ul>
             </div>
+        </div>
+
+        <!-- Email Entry Screen -->
+        <div id="email-screen" class="hidden text-center py-6 flex flex-col items-center gap-6 animate-fade-in">
+            <div class="bg-white rounded-3xl shadow-xl p-8 border border-slate-100 w-full max-w-sm">
+                <h3 class="text-xl font-bold text-slate-900 mb-2">Almost there!</h3>
+                <p class="text-slate-500 text-sm mb-6">Enter your email to participate and save your progress.</p>
+                <input type="email" id="user-email-input" placeholder="Enter your email address" class="w-full px-5 py-4 rounded-2xl border-2 border-slate-100 focus:border-blue-500 focus:outline-none mb-4 font-semibold text-slate-800 transition-colors">
+                <button onclick="handleEmailSubmit()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 rounded-2xl shadow-lg transition-all transform active:scale-95">Continue to Selection</button>
+                <button onclick="showStartScreen()" class="mt-4 text-slate-400 font-bold hover:text-slate-900 transition flex items-center justify-center gap-2 w-full">Cancel</button>
+            </div>
+        </div>
+
+        <!-- Selection Screen -->
+        <div id="selection-screen" class="hidden text-center py-6 flex flex-col items-center gap-6 animate-fade-in">
+            <button onclick="startQuiz('daily')" class="w-full max-w-sm bg-slate-900 hover:bg-slate-800 text-white text-lg font-bold py-5 px-12 rounded-3xl shadow-xl transition-all duration-200 transform hover:scale-105 flex flex-col items-center">
+                <span class="text-xl">Daily Quiz</span>
+                <span class="text-xs font-normal opacity-70 mt-1 uppercase tracking-widest">Based on Daily Digests</span>
+            </button>
+            <button onclick="startQuiz('maxims')" class="w-full max-w-sm bg-blue-700 hover:bg-blue-800 text-white text-lg font-bold py-5 px-12 rounded-3xl shadow-xl transition-all duration-200 transform hover:scale-105 flex flex-col items-center">
+                <span class="text-xl">Legal Maxims Quiz</span>
+                <span class="text-xs font-normal opacity-70 mt-1 uppercase tracking-widest">Master Judicial Principles</span>
+            </button>
+            <button onclick="showStartScreen()" class="mt-4 text-slate-400 font-bold hover:text-slate-900 transition flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+                Go Back
+            </button>
         </div>
 
         <!-- Quiz Screen -->
         <div id="quiz-screen" class="hidden space-y-6">
-            <!-- Progress & Timer Row -->
             <div class="flex items-center gap-4">
-                <div class="flex-grow bg-slate-200 h-2 rounded-full overflow-hidden">
-                    <div id="progress" class="bg-slate-900 h-full transition-all duration-500" style="width: 0%"></div>
-                </div>
-                <div id="timer-display" class="flex-shrink-0 font-mono font-bold text-lg text-slate-700 w-12 text-center">
-                    30s
-                </div>
+                <div class="flex-grow bg-slate-200 h-2 rounded-full overflow-hidden"><div id="progress" class="bg-slate-900 h-full transition-all duration-500" style="width: 0%"></div></div>
+                <div id="timer-display" class="flex-shrink-0 font-mono font-bold text-lg text-slate-700 w-12 text-center">30s</div>
             </div>
-            
             <div class="flex justify-between items-center text-xs font-bold text-slate-400 uppercase tracking-widest">
                 <span id="question-number">Question 1/10</span>
                 <span id="current-score" class="text-slate-900">Score: 0</span>
             </div>
-
-            <!-- Lifelines Row -->
             <div class="flex flex-wrap justify-center gap-3 mb-2">
                 <button id="lifeline-time" class="lifeline-btn flex items-center gap-2 bg-blue-100 hover:bg-blue-200 text-blue-700 px-4 py-2 rounded-full text-[10px] font-bold transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    +30s TIME
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>+30s TIME
                 </button>
                 <button id="lifeline-5050" class="lifeline-btn flex items-center gap-2 bg-purple-100 hover:bg-purple-200 text-purple-700 px-4 py-2 rounded-full text-[10px] font-bold transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                    </svg>
-                    50:50
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>50:50
                 </button>
                 <button id="lifeline-skip" class="lifeline-btn flex items-center gap-2 bg-amber-100 hover:bg-amber-200 text-amber-700 px-4 py-2 rounded-full text-[10px] font-bold transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
-                    </svg>
-                    SKIP (0)
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" /></svg>SKIP (0)
                 </button>
             </div>
-
             <div class="bg-white rounded-3xl shadow-2xl p-8 border border-slate-100 quiz-card">
-                <p id="question-text" class="text-xl font-bold text-slate-800 mb-8 leading-relaxed">
-                    Loading...
-                </p>
-                
+                <p id="question-text" class="text-xl font-bold text-slate-800 mb-8 leading-relaxed">Loading...</p>
                 <div id="options-container" class="grid grid-cols-1 gap-4"></div>
-
                 <div id="explanation-box" class="hidden mt-8 p-5 rounded-2xl bg-slate-50 border border-slate-200 border-l-4 border-l-blue-600">
                     <p class="font-bold text-slate-900 text-xs uppercase tracking-widest mb-2">Legal Context</p>
                     <p id="explanation-text" class="text-slate-600 text-sm leading-relaxed"></p>
                 </div>
-
                 <div class="mt-10 flex justify-end">
-                    <button id="next-btn" class="hidden bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 px-8 rounded-xl transition duration-200">
-                        Next Question
-                    </button>
+                    <button id="next-btn" class="hidden bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 px-8 rounded-xl transition duration-200">Next Question</button>
                 </div>
             </div>
         </div>
@@ -130,41 +172,34 @@
         <!-- Result Screen -->
         <div id="result-screen" class="hidden bg-white rounded-3xl shadow-2xl p-10 text-center border border-slate-100">
             <h2 class="serif text-4xl font-bold text-slate-900 mb-2">Results</h2>
-            <p class="text-slate-500 mb-8">Performance Summary</p>
-            
-            <!-- Result Information Box -->
+            <p id="result-subtitle" class="text-slate-500 mb-6">Performance Summary</p>
+            <div id="verify-email-badge" class="inline-block px-3 py-1 rounded-full bg-slate-100 text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-6">
+                Verification: <span id="display-email" class="text-slate-800"></span>
+            </div>
             <div class="bg-slate-50 rounded-2xl p-8 mb-8 border border-slate-100 flex flex-col items-center">
                 <div class="text-6xl font-black text-slate-900 mb-2" id="final-score-text">0</div>
                 <div class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-8">Total Points Earned</div>
-                
-                <!-- Subscribe Button Moved Inside -->
                 <a href="https://citecase.in/register" target="_blank" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 px-6 rounded-2xl shadow-lg transition-all duration-200 flex items-center justify-center gap-2 group">
                     <span>Subscribe CiteCase.in</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
                 </a>
             </div>
-
-            <!-- Action Buttons -->
             <div class="space-y-4 mb-6">
-                <!-- Tally Submit Button -->
                 <button id="submit-score-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-2xl shadow-lg transition-all duration-200 flex items-center justify-center gap-2 group">
                     <span>Submit Score to Leaderboard</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
                 </button>
+                <button onclick="showStartScreen()" class="text-slate-400 font-bold hover:text-slate-900 transition underline underline-offset-4 block mx-auto">Main Menu</button>
             </div>
-
-            <p class="text-[11px] text-slate-500 leading-relaxed max-w-sm mx-auto">
-                We may contact you on email once you reach 100 points to give you FREE limited access to our Supreme Court Daily Digests.
-            </p>
+            <p class="text-[11px] text-slate-500 leading-relaxed max-w-sm mx-auto">We may contact you on email once you reach 100 points to give you FREE limited access to our Supreme Court Daily Digests.</p>
         </div>
     </main>
 
+    <!-- Tawk.to Hidden Container -->
+    <div id='tawk_67614df349e2fd8dfef95e95' style="display:none !important;"></div>
+
     <script>
-        const quizData = [
+        const dailyQuizData = [
             {
                 question: "In NAK Engineering Company v. Tarun Keshrichand Shah, how is a 'necessary party' defined?",
                 options: ["Presence is desirable but optional.", "A party without whom no order can be made effectively.", "The plaintiff who institutes the suit.", "A third party affected by the decree."],
@@ -227,16 +262,136 @@
             }
         ];
 
+        const maximsQuizData = [
+            {
+                question: "Which legal maxim translates to 'The law is hard, but it is the law'?",
+                options: ["Lex specialis derogat legi generali", "Dura lex sed lex", "Ubi jus, ii remedium", "Vox Populi, Vox Dei"],
+                correct: 1,
+                explanation: "Para 9: Dura lex sed lex means the law is hard, but it must be followed regardless of unpleasant consequences."
+            },
+            {
+                question: "What is the meaning of the maxim 'Ut res magis valeat quam pereat'?",
+                options: ["Ignorance of law is no excuse.", "It is better for a thing to have effect than to be void.", "No one should be a judge in their own cause.", "A specific law overrides a general law."],
+                correct: 1,
+                explanation: "Para 30: This principle means a legal text should be interpreted in a way that gives it force rather than makes it fail."
+            },
+            {
+                question: "Which maxim is the foundation for the doctrine of Res Judicata?",
+                options: ["Actus curiae neminem gravabit", "Nemo debet bis vexari pro una et eadem causa", "Nemo dat quod non habet", "Suggestio falsi"],
+                correct: 1,
+                explanation: "Para 23: It means no man shall be vexed twice over the same cause of action, ensuring finality to a lis."
+            },
+            {
+                question: "The principle 'Contra proferentem' implies that an ambiguous term in a contract should be interpreted:",
+                options: ["Against the party who drafted/used it.", "In favor of the stronger party.", "Based on subsequent conduct only.", "As null and void immediately."],
+                correct: 0,
+                explanation: "Para 117-121: It means words of deeds are taken most strongly against the person who uses them, often protecting insured parties."
+            },
+            {
+                question: "What does 'Actus curiae neminem gravabit' signify in judicial proceedings?",
+                options: ["Judges must be fearless.", "The act of the Court shall prejudice no one.", "Litigation must come to an end.", "Specific law overrides general law."],
+                correct: 1,
+                explanation: "Para 15: No party should suffer owing to an error, delay, or inadvertence attributable to the Court itself."
+            },
+            {
+                question: "The maxim 'Lex specialis derogat legi generali' means:",
+                options: ["A specific law overrides a general law.", "General law always prevails.", "Law does not compel the impossible.", "The voice of the people is divine."],
+                correct: 0,
+                explanation: "Para 31: Where a special enactment deals with a defined subject, it prevails over general law to the extent of any overlap."
+            },
+            {
+                question: "Which maxim states that 'Ignorance of the law is no excuse'?",
+                options: ["Nemo judex in causa sua", "Ignorantia juris non excusat", "Reformatio in peius", "Quod fieri debuit pro facto censetur"],
+                correct: 1,
+                explanation: "Para 32: Ignorantia juris non excusat means one cannot escape liability by claiming they didn't know the law."
+            },
+            {
+                question: "What is the legal meaning of 'Nemo dat quod non habet'?",
+                options: ["No one can transfer a better title than they possess.", "No one is above the law.", "No one can be a judge in their own cause.", "Justice delayed is justice denied."],
+                correct: 0,
+                explanation: "Para 40: It means a person cannot transfer a title or right to property that they themselves do not hold."
+            },
+            {
+                question: "The term 'Suggestio falsi' refers to:",
+                options: ["Suppression of truth.", "A false representation or misleading suggestion.", "A procedural error in court.", "A change for the worse."],
+                correct: 1,
+                explanation: "Para 23: Suggestio falsi is a false representation, while suppresio veri is the suppression of truth."
+            },
+            {
+                question: "Which maxim prevents a higher court from making a judgment worse for the person appealing it?",
+                options: ["Stare decisis", "No reformatio in peius", "Lex non cogit ad impossibilia", "Vox Populi"],
+                correct: 1,
+                explanation: "Para 32: Prohibition of reformatio in peius ensures an appellant is not placed in a worse position by filing an appeal."
+            }
+        ];
+
+        let activeQuizData = [];
+        let userEmail = "";
         let currentQuestion = 0, score = 0, correctCount = 0, answered = false;
         let timerSeconds = 30;
         let timerInterval = null;
         let lifelinesUsed = { time: false, fiftyFifty: false, skip: false };
 
+        function showStartScreen() {
+            document.getElementById('start-screen').classList.remove('hidden');
+            document.getElementById('email-screen').classList.add('hidden');
+            document.getElementById('selection-screen').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.add('hidden');
+        }
+
+        function showEmailScreen() {
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('email-screen').classList.remove('hidden');
+        }
+
+        function handleEmailSubmit() {
+            const emailInput = document.getElementById('user-email-input');
+            const emailValue = emailInput.value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (!emailRegex.test(emailValue)) {
+                emailInput.classList.add('border-red-500');
+                setTimeout(() => emailInput.classList.remove('border-red-500'), 2000);
+                return;
+            }
+
+            userEmail = emailValue;
+            document.getElementById('display-email').innerText = userEmail;
+            
+            // Sync with Tawk.to - Using visitor object for standard identification
+            if (typeof Tawk_API !== 'undefined' && Tawk_API.setAttributes) {
+                Tawk_API.visitor = {
+                    name : emailValue,
+                    email : emailValue
+                };
+                Tawk_API.setAttributes({
+                    'email': emailValue,
+                    'status': 'Started Quiz'
+                }, function(error){});
+            }
+
+            document.getElementById('email-screen').classList.add('hidden');
+            document.getElementById('selection-screen').classList.remove('hidden');
+        }
+
+        function toggleRules() {
+            const container = document.getElementById('rules-container');
+            const icon = document.getElementById('rules-icon');
+            const isHidden = container.classList.contains('hidden');
+            if (isHidden) {
+                container.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                container.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
         function startTimer() {
             clearInterval(timerInterval);
             timerSeconds = 30;
             updateTimerDisplay();
-            
             timerInterval = setInterval(() => {
                 timerSeconds--;
                 updateTimerDisplay();
@@ -249,11 +404,10 @@
 
         function updateTimerDisplay() {
             const display = document.getElementById('timer-display');
-            display.innerText = `${timerSeconds}s`;
-            if (timerSeconds <= 5) {
-                display.classList.add('timer-warning');
-            } else {
-                display.classList.remove('timer-warning');
+            if (display) {
+                display.innerText = `${timerSeconds}s`;
+                if (timerSeconds <= 5) display.classList.add('timer-warning');
+                else display.classList.remove('timer-warning');
             }
         }
 
@@ -261,20 +415,19 @@
             if (answered) return;
             score -= 1; 
             const buttons = document.getElementById('options-container').getElementsByTagName('button');
-            const q = quizData[currentQuestion];
-            buttons[q.correct].classList.add('correct');
+            const q = activeQuizData[currentQuestion];
+            if (buttons[q.correct]) buttons[q.correct].classList.add('correct');
             showExplanation();
         }
 
         function showExplanation() {
             answered = true;
             clearInterval(timerInterval);
-            const q = quizData[currentQuestion];
+            const q = activeQuizData[currentQuestion];
             document.getElementById('explanation-text').innerText = q.explanation;
             document.getElementById('explanation-box').classList.remove('hidden');
             document.getElementById('next-btn').classList.remove('hidden');
             document.getElementById('current-score').innerText = `Score: ${score}`;
-            
             document.getElementById('lifeline-time').disabled = true;
             document.getElementById('lifeline-5050').disabled = true;
             document.getElementById('lifeline-skip').disabled = true;
@@ -293,22 +446,16 @@
         function use5050Lifeline() {
             if (lifelinesUsed.fiftyFifty || answered) return;
             lifelinesUsed.fiftyFifty = true;
-            const q = quizData[currentQuestion];
+            const q = activeQuizData[currentQuestion];
             const buttons = Array.from(document.getElementById('options-container').getElementsByTagName('button'));
-            
-            let incorrectIndices = q.options
-                .map((_, i) => i)
-                .filter(i => i !== q.correct);
-            
+            let incorrectIndices = q.options.map((_, i) => i).filter(i => i !== q.correct);
             const keepIncorrectIndex = incorrectIndices[Math.floor(Math.random() * incorrectIndices.length)];
-            
             buttons.forEach((btn, idx) => {
                 if (idx !== q.correct && idx !== keepIncorrectIndex) {
                     btn.style.opacity = '0.1';
                     btn.disabled = true;
                 }
             });
-            
             document.getElementById('lifeline-5050').disabled = true;
         }
 
@@ -316,16 +463,18 @@
             if (lifelinesUsed.skip || answered) return;
             lifelinesUsed.skip = true;
             const buttons = document.getElementById('options-container').getElementsByTagName('button');
-            const q = quizData[currentQuestion];
-            buttons[q.correct].classList.add('correct');
+            const q = activeQuizData[currentQuestion];
+            if (buttons[q.correct]) buttons[q.correct].classList.add('correct');
             showExplanation();
             document.getElementById('lifeline-skip').disabled = true;
         }
 
-        function startQuiz() {
+        function startQuiz(type) {
+            activeQuizData = type === 'daily' ? dailyQuizData : maximsQuizData;
+            document.getElementById('result-subtitle').innerText = type === 'daily' ? 'Daily Quiz Performance' : 'Legal Maxims Quiz Performance';
             currentQuestion = 0; score = 0; correctCount = 0;
             lifelinesUsed = { time: false, fiftyFifty: false, skip: false };
-            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('selection-screen').classList.add('hidden');
             document.getElementById('result-screen').classList.add('hidden');
             document.getElementById('quiz-screen').classList.remove('hidden');
             showQuestion();
@@ -335,17 +484,14 @@
             answered = false;
             document.getElementById('next-btn').classList.add('hidden');
             document.getElementById('explanation-box').classList.add('hidden');
-            
             document.getElementById('lifeline-time').disabled = lifelinesUsed.time;
             document.getElementById('lifeline-5050').disabled = lifelinesUsed.fiftyFifty;
             document.getElementById('lifeline-skip').disabled = lifelinesUsed.skip;
-
-            const q = quizData[currentQuestion];
+            const q = activeQuizData[currentQuestion];
             document.getElementById('question-text').innerText = q.question;
-            document.getElementById('question-number').innerText = `Question ${currentQuestion + 1}/${quizData.length}`;
+            document.getElementById('question-number').innerText = `Question ${currentQuestion + 1}/${activeQuizData.length}`;
             document.getElementById('current-score').innerText = `Score: ${score}`;
-            document.getElementById('progress').style.width = `${((currentQuestion) / quizData.length) * 100}%`;
-            
+            document.getElementById('progress').style.width = `${((currentQuestion) / activeQuizData.length) * 100}%`;
             const container = document.getElementById('options-container');
             container.innerHTML = '';
             q.options.forEach((opt, idx) => {
@@ -355,13 +501,12 @@
                 btn.onclick = () => selectOption(idx, btn);
                 container.appendChild(btn);
             });
-            
             startTimer();
         }
 
         function selectOption(idx, btn) {
             if (answered) return;
-            const q = quizData[currentQuestion];
+            const q = activeQuizData[currentQuestion];
             if (idx === q.correct) {
                 btn.classList.add('correct');
                 score += 2;
@@ -369,17 +514,16 @@
             } else {
                 btn.classList.add('incorrect');
                 const buttons = document.getElementById('options-container').getElementsByTagName('button');
-                buttons[q.correct].classList.add('correct');
+                if (buttons[q.correct]) buttons[q.correct].classList.add('correct');
                 score -= 1;
             }
-            
             showExplanation();
-            document.getElementById('progress').style.width = `${((currentQuestion + 1) / quizData.length) * 100}%`;
+            document.getElementById('progress').style.width = `${((currentQuestion + 1) / activeQuizData.length) * 100}%`;
         }
 
         function nextQuestion() {
             currentQuestion++;
-            if (currentQuestion < quizData.length) showQuestion();
+            if (currentQuestion < activeQuizData.length) showQuestion();
             else showResults();
         }
 
@@ -387,21 +531,48 @@
             clearInterval(timerInterval);
             document.getElementById('quiz-screen').classList.add('hidden');
             document.getElementById('result-screen').classList.remove('hidden');
-            
-            const accuracy = Math.round((correctCount / quizData.length) * 100);
+            const accuracy = Math.round((correctCount / activeQuizData.length) * 100);
             document.getElementById('final-score-text').innerText = score;
 
-            const tallyUrl = `https://tally.so/r/5Bjpvv?score=${score}&total=${quizData.length}&accuracy=${accuracy}`;
+            // Sync with Tawk.to
+            if (typeof Tawk_API !== 'undefined' && Tawk_API.setAttributes) {
+                Tawk_API.setAttributes({
+                    'score': score,
+                    'accuracy': accuracy + '%',
+                    'status': 'Finished Quiz'
+                }, function(error){});
+            }
+
+            const tallyUrl = `https://tally.so/r/5Bjpvv?email=${encodeURIComponent(userEmail)}&score=${score}&total=${activeQuizData.length}&accuracy=${accuracy}`;
             document.getElementById('submit-score-btn').onclick = () => window.open(tallyUrl, '_blank');
         }
 
         window.onload = () => {
-            document.getElementById('start-btn').onclick = startQuiz;
+            document.getElementById('main-start-btn').onclick = showEmailScreen;
             document.getElementById('next-btn').onclick = nextQuestion;
             document.getElementById('lifeline-time').onclick = useTimeLifeline;
             document.getElementById('lifeline-5050').onclick = use5050Lifeline;
             document.getElementById('lifeline-skip').onclick = useSkipLifeline;
+            document.getElementById('rules-toggle-btn').onclick = toggleRules;
         };
     </script>
+
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date(); Tawk_API.embedded='tawk_67614df349e2fd8dfef95e95';
+    
+    Tawk_API.onLoad = function(){
+        Tawk_API.hideWidget();
+    };
+
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/67614df349e2fd8dfef95e95/1je9qg1ab';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);})();
+    </script>
+    <!--End of Tawk.to Script-->
 </body>
 </html>
