@@ -18,7 +18,7 @@
         .quiz-card {
             transition: all 0.3s ease;
         }
-        .option-btn:hover {
+        .option-btn:hover:not(:disabled) {
             border-color: #0f172a;
             background-color: #f1f5f9;
         }
@@ -31,6 +31,19 @@
             background-color: #fee2e2 !important;
             border-color: #ef4444 !important;
             color: #991b1b !important;
+        }
+        .lifeline-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            filter: grayscale(1);
+        }
+        .timer-warning {
+            color: #ef4444;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
     </style>
 </head>
@@ -50,17 +63,48 @@
                 Start Quiz
             </button>
             <p class="mt-6 text-slate-500 text-sm italic">Based on the Daily Digest - 05 January 2026</p>
+            <div class="mt-4 text-xs text-slate-400 font-medium">
+                Correct: +2 | Incorrect: -1 | Skip: 0
+            </div>
         </div>
 
         <!-- Quiz Screen -->
         <div id="quiz-screen" class="hidden space-y-6">
-            <div class="bg-slate-200 h-2 w-full rounded-full overflow-hidden">
-                <div id="progress" class="bg-slate-900 h-full transition-all duration-500" style="width: 0%"></div>
+            <!-- Progress & Timer Row -->
+            <div class="flex items-center gap-4">
+                <div class="flex-grow bg-slate-200 h-2 rounded-full overflow-hidden">
+                    <div id="progress" class="bg-slate-900 h-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+                <div id="timer-display" class="flex-shrink-0 font-mono font-bold text-lg text-slate-700 w-12 text-center">
+                    30s
+                </div>
             </div>
             
             <div class="flex justify-between items-center text-xs font-bold text-slate-400 uppercase tracking-widest">
                 <span id="question-number">Question 1/10</span>
-                <span id="current-score">Score: 0</span>
+                <span id="current-score" class="text-slate-900">Score: 0</span>
+            </div>
+
+            <!-- Lifelines Row -->
+            <div class="flex flex-wrap justify-center gap-3 mb-2">
+                <button id="lifeline-time" class="lifeline-btn flex items-center gap-2 bg-blue-100 hover:bg-blue-200 text-blue-700 px-4 py-2 rounded-full text-[10px] font-bold transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    +30s TIME
+                </button>
+                <button id="lifeline-5050" class="lifeline-btn flex items-center gap-2 bg-purple-100 hover:bg-purple-200 text-purple-700 px-4 py-2 rounded-full text-[10px] font-bold transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                    </svg>
+                    50:50
+                </button>
+                <button id="lifeline-skip" class="lifeline-btn flex items-center gap-2 bg-amber-100 hover:bg-amber-200 text-amber-700 px-4 py-2 rounded-full text-[10px] font-bold transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                    </svg>
+                    SKIP (0)
+                </button>
             </div>
 
             <div class="bg-white rounded-3xl shadow-2xl p-8 border border-slate-100 quiz-card">
@@ -88,28 +132,34 @@
             <h2 class="serif text-4xl font-bold text-slate-900 mb-2">Results</h2>
             <p class="text-slate-500 mb-8">Performance Summary</p>
             
-            <div class="bg-slate-50 rounded-2xl p-8 mb-6 border border-slate-100">
-                <div class="text-6xl font-black text-slate-900 mb-2" id="final-score-text">0/10</div>
-                <div class="text-lg font-bold text-blue-600 uppercase tracking-tighter" id="final-percent">0% Accuracy</div>
-                <p id="result-message" class="mt-4 text-slate-600 font-medium"></p>
+            <!-- Result Information Box -->
+            <div class="bg-slate-50 rounded-2xl p-8 mb-8 border border-slate-100 flex flex-col items-center">
+                <div class="text-6xl font-black text-slate-900 mb-2" id="final-score-text">0</div>
+                <div class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-8">Total Points Earned</div>
+                
+                <!-- Subscribe Button Moved Inside -->
+                <a href="https://citecase.in/register" target="_blank" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 px-6 rounded-2xl shadow-lg transition-all duration-200 flex items-center justify-center gap-2 group">
+                    <span>Subscribe CiteCase.in</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                    </svg>
+                </a>
             </div>
 
-            <!-- Tally Submit Button -->
-            <div class="mb-6">
+            <!-- Action Buttons -->
+            <div class="space-y-4 mb-6">
+                <!-- Tally Submit Button -->
                 <button id="submit-score-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-2xl shadow-lg transition-all duration-200 flex items-center justify-center gap-2 group">
                     <span>Submit Score to Leaderboard</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                     </svg>
                 </button>
-                <p class="text-[11px] text-slate-500 mt-4 leading-relaxed max-w-sm mx-auto">
-                    We may contact you on email once you reach 100 points to give you FREE limited access to our Supreme Court Daily Digests.
-                </p>
             </div>
 
-            <button id="restart-btn" class="mt-6 text-slate-400 font-bold hover:text-slate-900 transition underline underline-offset-4">
-                Retake Quiz
-            </button>
+            <p class="text-[11px] text-slate-500 leading-relaxed max-w-sm mx-auto">
+                We may contact you on email once you reach 100 points to give you FREE limited access to our Supreme Court Daily Digests.
+            </p>
         </div>
     </main>
 
@@ -177,10 +227,104 @@
             }
         ];
 
-        let currentQuestion = 0, score = 0, answered = false;
+        let currentQuestion = 0, score = 0, correctCount = 0, answered = false;
+        let timerSeconds = 30;
+        let timerInterval = null;
+        let lifelinesUsed = { time: false, fiftyFifty: false, skip: false };
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            timerSeconds = 30;
+            updateTimerDisplay();
+            
+            timerInterval = setInterval(() => {
+                timerSeconds--;
+                updateTimerDisplay();
+                if (timerSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    handleTimeout();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const display = document.getElementById('timer-display');
+            display.innerText = `${timerSeconds}s`;
+            if (timerSeconds <= 5) {
+                display.classList.add('timer-warning');
+            } else {
+                display.classList.remove('timer-warning');
+            }
+        }
+
+        function handleTimeout() {
+            if (answered) return;
+            score -= 1; 
+            const buttons = document.getElementById('options-container').getElementsByTagName('button');
+            const q = quizData[currentQuestion];
+            buttons[q.correct].classList.add('correct');
+            showExplanation();
+        }
+
+        function showExplanation() {
+            answered = true;
+            clearInterval(timerInterval);
+            const q = quizData[currentQuestion];
+            document.getElementById('explanation-text').innerText = q.explanation;
+            document.getElementById('explanation-box').classList.remove('hidden');
+            document.getElementById('next-btn').classList.remove('hidden');
+            document.getElementById('current-score').innerText = `Score: ${score}`;
+            
+            document.getElementById('lifeline-time').disabled = true;
+            document.getElementById('lifeline-5050').disabled = true;
+            document.getElementById('lifeline-skip').disabled = true;
+            const buttons = document.getElementById('options-container').getElementsByTagName('button');
+            for (let b of buttons) b.disabled = true;
+        }
+
+        function useTimeLifeline() {
+            if (lifelinesUsed.time || answered) return;
+            lifelinesUsed.time = true;
+            timerSeconds += 30;
+            updateTimerDisplay();
+            document.getElementById('lifeline-time').disabled = true;
+        }
+
+        function use5050Lifeline() {
+            if (lifelinesUsed.fiftyFifty || answered) return;
+            lifelinesUsed.fiftyFifty = true;
+            const q = quizData[currentQuestion];
+            const buttons = Array.from(document.getElementById('options-container').getElementsByTagName('button'));
+            
+            let incorrectIndices = q.options
+                .map((_, i) => i)
+                .filter(i => i !== q.correct);
+            
+            const keepIncorrectIndex = incorrectIndices[Math.floor(Math.random() * incorrectIndices.length)];
+            
+            buttons.forEach((btn, idx) => {
+                if (idx !== q.correct && idx !== keepIncorrectIndex) {
+                    btn.style.opacity = '0.1';
+                    btn.disabled = true;
+                }
+            });
+            
+            document.getElementById('lifeline-5050').disabled = true;
+        }
+
+        function useSkipLifeline() {
+            if (lifelinesUsed.skip || answered) return;
+            lifelinesUsed.skip = true;
+            const buttons = document.getElementById('options-container').getElementsByTagName('button');
+            const q = quizData[currentQuestion];
+            buttons[q.correct].classList.add('correct');
+            showExplanation();
+            document.getElementById('lifeline-skip').disabled = true;
+        }
 
         function startQuiz() {
-            currentQuestion = 0; score = 0;
+            currentQuestion = 0; score = 0; correctCount = 0;
+            lifelinesUsed = { time: false, fiftyFifty: false, skip: false };
             document.getElementById('start-screen').classList.add('hidden');
             document.getElementById('result-screen').classList.add('hidden');
             document.getElementById('quiz-screen').classList.remove('hidden');
@@ -191,6 +335,11 @@
             answered = false;
             document.getElementById('next-btn').classList.add('hidden');
             document.getElementById('explanation-box').classList.add('hidden');
+            
+            document.getElementById('lifeline-time').disabled = lifelinesUsed.time;
+            document.getElementById('lifeline-5050').disabled = lifelinesUsed.fiftyFifty;
+            document.getElementById('lifeline-skip').disabled = lifelinesUsed.skip;
+
             const q = quizData[currentQuestion];
             document.getElementById('question-text').innerText = q.question;
             document.getElementById('question-number').innerText = `Question ${currentQuestion + 1}/${quizData.length}`;
@@ -201,28 +350,30 @@
             container.innerHTML = '';
             q.options.forEach((opt, idx) => {
                 const btn = document.createElement('button');
-                btn.className = "option-btn w-full text-left p-5 rounded-2xl border-2 border-slate-100 font-semibold transition duration-200 bg-white hover:shadow-lg";
+                btn.className = "option-btn w-full text-left p-5 rounded-2xl border-2 border-slate-100 font-semibold transition duration-200 bg-white hover:shadow-lg disabled:cursor-default";
                 btn.innerText = opt;
                 btn.onclick = () => selectOption(idx, btn);
                 container.appendChild(btn);
             });
+            
+            startTimer();
         }
 
         function selectOption(idx, btn) {
             if (answered) return;
-            answered = true;
             const q = quizData[currentQuestion];
-            const buttons = document.getElementById('options-container').getElementsByTagName('button');
             if (idx === q.correct) {
                 btn.classList.add('correct');
-                score++;
+                score += 2;
+                correctCount++;
             } else {
                 btn.classList.add('incorrect');
+                const buttons = document.getElementById('options-container').getElementsByTagName('button');
                 buttons[q.correct].classList.add('correct');
+                score -= 1;
             }
-            document.getElementById('explanation-text').innerText = q.explanation;
-            document.getElementById('explanation-box').classList.remove('hidden');
-            document.getElementById('next-btn').classList.remove('hidden');
+            
+            showExplanation();
             document.getElementById('progress').style.width = `${((currentQuestion + 1) / quizData.length) * 100}%`;
         }
 
@@ -233,25 +384,23 @@
         }
 
         function showResults() {
+            clearInterval(timerInterval);
             document.getElementById('quiz-screen').classList.add('hidden');
             document.getElementById('result-screen').classList.remove('hidden');
-            const percent = Math.round((score / quizData.length) * 100);
-            document.getElementById('final-score-text').innerText = `${score}/${quizData.length}`;
-            document.getElementById('final-percent').innerText = `${percent}% Accuracy`;
             
-            let msg = percent >= 80 ? "Superior legal analysis skills demonstrated." : 
-                      percent >= 50 ? "Solid understanding of recent SC precedents." : "Keep studying the latest digests for better precision.";
-            document.getElementById('result-message').innerText = msg;
+            const accuracy = Math.round((correctCount / quizData.length) * 100);
+            document.getElementById('final-score-text').innerText = score;
 
-            // Link score to Tally Form
-            const tallyUrl = `https://tally.so/r/5Bjpvv?score=${score}&total=${quizData.length}`;
+            const tallyUrl = `https://tally.so/r/5Bjpvv?score=${score}&total=${quizData.length}&accuracy=${accuracy}`;
             document.getElementById('submit-score-btn').onclick = () => window.open(tallyUrl, '_blank');
         }
 
         window.onload = () => {
             document.getElementById('start-btn').onclick = startQuiz;
-            document.getElementById('restart-btn').onclick = startQuiz;
             document.getElementById('next-btn').onclick = nextQuestion;
+            document.getElementById('lifeline-time').onclick = useTimeLifeline;
+            document.getElementById('lifeline-5050').onclick = use5050Lifeline;
+            document.getElementById('lifeline-skip').onclick = useSkipLifeline;
         };
     </script>
 </body>
