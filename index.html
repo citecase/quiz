@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supreme Court Daily Digest Quiz - Jan 5, 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .quiz-card {
+            transition: all 0.3s ease;
+        }
+        .option-btn:hover {
+            border-color: #1e40af;
+            background-color: #eff6ff;
+        }
+        .correct {
+            background-color: #dcfce7 !important;
+            border-color: #22c55e !important;
+            color: #166534 !important;
+        }
+        .incorrect {
+            background-color: #fee2e2 !important;
+            border-color: #ef4444 !important;
+            color: #991b1b !important;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center py-10 px-4">
+
+    <!-- Header -->
+    <header class="max-w-3xl w-full text-center mb-10">
+        <h1 class="serif text-4xl text-slate-900 mb-2">Supreme Court Daily Digest</h1>
+        <p class="text-slate-500 font-medium uppercase tracking-widest text-sm">Interactive Quiz • 05 January 2026 Edition</p>
+        <div class="h-1 w-24 bg-blue-600 mx-auto mt-4 rounded-full"></div>
+    </header>
+
+    <main class="max-w-2xl w-full">
+        <!-- Start Screen -->
+        <div id="start-screen" class="bg-white rounded-2xl shadow-xl p-8 text-center border border-slate-200">
+            <div class="mb-6 text-blue-600 flex justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-slate-800 mb-4">Test Your Knowledge</h2>
+            <p class="text-slate-600 mb-8 leading-relaxed">
+                Test your understanding of the latest legal developments including Arbitration law, UAPA bail jurisprudence, and Judicial disciplinary standards from the January 5, 2026 digest.
+            </p>
+            <button id="start-btn" class="bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 px-10 rounded-lg shadow-lg transition duration-200 active:scale-95">
+                Start Quiz
+            </button>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="hidden space-y-6">
+            <!-- Progress Bar -->
+            <div class="bg-slate-200 h-2 w-full rounded-full overflow-hidden">
+                <div id="progress" class="bg-blue-600 h-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+            
+            <div class="flex justify-between items-center text-sm font-semibold text-slate-500 uppercase tracking-tighter">
+                <span id="question-number">Question 1/10</span>
+                <span id="current-score">Score: 0</span>
+            </div>
+
+            <!-- Question Card -->
+            <div class="bg-white rounded-2xl shadow-xl p-8 border border-slate-200 quiz-card">
+                <p id="question-text" class="text-xl font-semibold text-slate-800 mb-6 leading-snug">
+                    Loading question...
+                </p>
+                
+                <div id="options-container" class="grid grid-cols-1 gap-3">
+                    <!-- Options injected here -->
+                </div>
+
+                <!-- Explanation Box -->
+                <div id="explanation-box" class="hidden mt-6 p-4 rounded-lg bg-blue-50 border border-blue-100 animate-fade-in">
+                    <p class="font-bold text-blue-900 text-sm uppercase tracking-wide mb-1">Legal Context:</p>
+                    <p id="explanation-text" class="text-slate-700 text-sm leading-relaxed"></p>
+                </div>
+
+                <!-- Footer -->
+                <div class="mt-8 flex justify-end">
+                    <button id="next-btn" class="hidden bg-slate-800 hover:bg-slate-900 text-white font-bold py-2.5 px-6 rounded-lg transition duration-200">
+                        Next Question
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="result-screen" class="hidden bg-white rounded-2xl shadow-xl p-8 text-center border border-slate-200">
+            <h2 class="text-3xl font-bold text-slate-800 mb-2">Quiz Complete!</h2>
+            <p class="text-slate-500 mb-6">Here is how you performed on the Daily Digest insights.</p>
+            
+            <div class="relative inline-block mb-8">
+                <svg class="w-40 h-40 transform -rotate-90">
+                    <circle cx="80" cy="80" r="70" stroke="currentColor" stroke-width="12" fill="transparent" class="text-slate-100" />
+                    <circle id="result-circle" cx="80" cy="80" r="70" stroke="currentColor" stroke-width="12" fill="transparent" stroke-dasharray="440" stroke-dashoffset="440" class="text-blue-600 transition-all duration-1000 ease-out" />
+                </svg>
+                <div class="absolute inset-0 flex items-center justify-center flex-col">
+                    <span id="final-score-text" class="text-4xl font-bold text-slate-800">0/10</span>
+                    <span id="final-percent" class="text-sm font-semibold text-slate-500">0%</span>
+                </div>
+            </div>
+
+            <p id="result-message" class="text-lg font-medium text-slate-700 mb-8"></p>
+            
+            <button id="restart-btn" class="bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 px-10 rounded-lg shadow-lg transition duration-200">
+                Try Again
+            </button>
+        </div>
+    </main>
+
+    <script>
+        const quizData = [
+            {
+                question: "In NAK Engineering Company v. Tarun Keshrichand Shah, how did the Court define a 'necessary party'?",
+                options: [
+                    "A party whose presence is desirable but not essential for a decision.",
+                    "A party without whom no order can be made effectively.",
+                    "The plaintiff who institutes the suit.",
+                    "A third party who is inadvertently affected by the decree."
+                ],
+                correct: 1,
+                explanation: "Paragraph 39-40: A necessary party is one without whom no order can be made effectively, whereas a proper party is one whose presence is necessary for a complete and final decision."
+            },
+            {
+                question: "According to Bhadra International (India) Pvt. Ltd. vs Airports Authority of India, how can the ineligibility of an arbitrator under Section 12(5) be waived?",
+                options: [
+                    "By oral consent in the first hearing.",
+                    "By filing a statement of claim without objection.",
+                    "Only by an express agreement in writing.",
+                    "By procedural happenstance during the hearing."
+                ],
+                correct: 2,
+                explanation: "The Court held that the ineligibility of an arbitrator can be waived ONLY by an express agreement in writing, ensuring parties aren't divested of rights inadvertently (Para 89-90)."
+            },
+            {
+                question: "In the context of judicial disciplinary proceedings (Nirbhay Singh Suliya vs MP), what is the determinative factor for misconduct?",
+                options: [
+                    "The correctness of the judicial verdict.",
+                    "Whether the Judge's decision was later overturned.",
+                    "The conduct of the Officer in question.",
+                    "The number of litigants who are unhappy with the order."
+                ],
+                correct: 2,
+                explanation: "Para 34: It is not the correctness of the verdict but the conduct of the Officer in question which is determinative for disciplinary proceedings."
+            },
+            {
+                question: "Under the UAPA Section 43D(5) bail jurisprudence discussed in Gulfisha Fatima vs State, what does 'prima facie true' mandate?",
+                options: [
+                    "A full-fledged trial evaluation of evidence.",
+                    "A threshold judicial inquiry that is neither perfunctory nor adjudicatory.",
+                    "Evaluation of the accused's defense materials.",
+                    "Proof beyond reasonable doubt at the bail stage."
+                ],
+                correct: 1,
+                explanation: "Para 81-82: The Court must examine whether the prosecution material, taken at face value, discloses the essential statutory ingredients, without conducting a mini-trial."
+            },
+            {
+                question: "Which legal maxim was cited in Adani Power Ltd. vs Union of India to emphasize the importance of standing by what is decided?",
+                options: [
+                    "Dominus Litis",
+                    "Ex proprio vigore",
+                    "Stare decisis et non quieta movere",
+                    "Interest reipublicae ut sit finis litium"
+                ],
+                correct: 2,
+                explanation: "The Court used 'Stare decisis et non quieta movere' to signify the need for stability and predictability in law (Para 78)."
+            },
+            {
+                question: "In Bhagheeratha Engineering Ltd vs State of Kerala, what did the Court say about the Section 21 notice (notice of arbitration)?",
+                options: [
+                    "It is a mandatory prerequisite for every arbitration.",
+                    "Failure to issue it is always fatal to the claim.",
+                    "It is primarily for the purpose of reckoning limitation.",
+                    "It operates as consent to all future appointments."
+                ],
+                correct: 2,
+                explanation: "Para 16: Section 21 is concerned with determining commencement for limitation; failure to issue it is not necessarily fatal if the claim is valid."
+            },
+            {
+                question: "According to the Adani Power judgment, regarding delegated legislation and taxation, which statement is TRUE?",
+                options: [
+                    "The power to exempt includes the power to tax.",
+                    "A delegate can do indirectly what it cannot do directly.",
+                    "The executive can enlarge the field of taxation via machinery provisions.",
+                    "The power to exempt is NOT a power to tax."
+                ],
+                correct: 3,
+                explanation: "Para 55: The Court held that the power to exempt is not a power to tax; the executive cannot enlarge the field of taxation under the pretext of an exemption."
+            },
+            {
+                question: "In Subhash Aggarwal v. Mahender Pal Chhabra, the Court noted that 'readiness and willingness' under the Specific Relief Act:",
+                options: [
+                    "Follows a strict, one-size-fits-all formula.",
+                    "Has no straitjacket formula and depends on facts of each case.",
+                    "Is only relevant if the defendant is not at fault.",
+                    "Must be proven by physical cash availability at all times."
+                ],
+                correct: 1,
+                explanation: "Para 6: The Court clarified there is no straitjacket formula for 'readiness and willingness'; it must be construed based on specific circumstances."
+            },
+            {
+                question: "In the UAPA bail analysis, how did the Court view 'delay' in trial?",
+                options: [
+                    "Delay is a 'trump card' that automatically requires bail.",
+                    "Delay is irrelevant in cases involving national security.",
+                    "Delay serves as a trigger for heightened judicial scrutiny under Article 21.",
+                    "Delay only matters if the accused is a woman."
+                ],
+                correct: 2,
+                explanation: "Para 56-57: Delay doesn't automatically displace restraint but triggers heightened scrutiny to balance the offense's gravity with personal liberty."
+            },
+            {
+                question: "The principle of 'Dominus Litis' implies that:",
+                options: [
+                    "The Court chooses who should be sued.",
+                    "The plaintiffs choose their adversaries and do so at their own risk.",
+                    "The defendant can compel the addition of any third party.",
+                    "All legal disputes must end in settlement."
+                ],
+                correct: 1,
+                explanation: "Page 2: Plaintiffs who institute the suit are dominus litis and it is for them to choose their adversaries."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultScreen = document.getElementById('result-screen');
+        const optionsContainer = document.getElementById('options-container');
+        const questionText = document.getElementById('question-text');
+        const questionNumber = document.getElementById('question-number');
+        const scoreDisplay = document.getElementById('current-score');
+        const progress = document.getElementById('progress');
+        const nextBtn = document.getElementById('next-btn');
+        const explanationBox = document.getElementById('explanation-box');
+        const explanationText = document.getElementById('explanation-text');
+
+        function initQuiz() {
+            document.getElementById('start-btn').onclick = startQuiz;
+            document.getElementById('restart-btn').onclick = startQuiz;
+            nextBtn.onclick = nextQuestion;
+        }
+
+        function startQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            startScreen.classList.add('hidden');
+            resultScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            answered = false;
+            nextBtn.classList.add('hidden');
+            explanationBox.classList.add('hidden');
+            
+            const q = quizData[currentQuestion];
+            questionText.innerText = q.question;
+            questionNumber.innerText = `Question ${currentQuestion + 1}/${quizData.length}`;
+            scoreDisplay.innerText = `Score: ${score}`;
+            progress.style.width = `${((currentQuestion) / quizData.length) * 100}%`;
+
+            optionsContainer.innerHTML = '';
+            q.options.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = "option-btn w-full text-left p-4 rounded-xl border-2 border-slate-200 font-medium transition duration-200 bg-white hover:shadow-md";
+                btn.innerText = option;
+                btn.onclick = () => selectOption(index, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function selectOption(index, btn) {
+            if (answered) return;
+            answered = true;
+            
+            const q = quizData[currentQuestion];
+            const buttons = optionsContainer.getElementsByTagName('button');
+
+            if (index === q.correct) {
+                btn.classList.add('correct');
+                score++;
+                scoreDisplay.innerText = `Score: ${score}`;
+            } else {
+                btn.classList.add('incorrect');
+                buttons[q.correct].classList.add('correct');
+            }
+
+            // Disable all buttons
+            for (let b of buttons) {
+                b.style.cursor = 'default';
+            }
+
+            // Show explanation
+            explanationText.innerText = q.explanation;
+            explanationBox.classList.remove('hidden');
+            
+            // Show Next button
+            nextBtn.classList.remove('hidden');
+            
+            // Update progress for current completion
+            progress.style.width = `${((currentQuestion + 1) / quizData.length) * 100}%`;
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < quizData.length) {
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            quizScreen.classList.add('hidden');
+            resultScreen.classList.remove('hidden');
+            
+            const percent = (score / quizData.length) * 100;
+            document.getElementById('final-score-text').innerText = `${score}/${quizData.length}`;
+            document.getElementById('final-percent').innerText = `${percent}%`;
+            
+            // Message based on score
+            let msg = "";
+            if (percent === 100) msg = "Exceptional! You have a perfect grasp of the Jan 5 Daily Digest.";
+            else if (percent >= 70) msg = "Great job! You have a strong understanding of the latest SC rulings.";
+            else if (percent >= 40) msg = "Good effort. Reviewing the digest once more will help solidify these concepts.";
+            else msg = "Legal practice requires precision. Re-read the digest to improve your score.";
+            
+            document.getElementById('result-message').innerText = msg;
+
+            // Animate circle
+            const circle = document.getElementById('result-circle');
+            const offset = 440 - (440 * percent / 100);
+            setTimeout(() => {
+                circle.style.strokeDashoffset = offset;
+            }, 100);
+        }
+
+        window.onload = initQuiz;
+    </script>
+</body>
+</html>
