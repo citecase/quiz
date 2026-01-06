@@ -53,6 +53,16 @@
             to { opacity: 1; transform: translateY(0); }
         }
     </style>
+    <script type="text/javascript">
+        // Standard Tawk.to initialization for tracking
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        Tawk_API.onLoad = function() {
+            // Hide the widget UI entirely but keep script active for tracking
+            if (Tawk_API.hideWidget) {
+                Tawk_API.hideWidget();
+            }
+        };
+    </script>
 </head>
 <body class="min-h-screen flex flex-col items-center py-12 px-4">
 
@@ -69,6 +79,7 @@
             <button id="main-start-btn" class="w-full max-w-sm bg-slate-900 hover:bg-slate-800 text-white text-lg font-bold py-4 px-12 rounded-full shadow-xl transition-all duration-200 transform hover:scale-105">
                 Start Quiz
             </button>
+            
             <a href="https://www.caseciter.com/tag/daily-digest/" target="_blank" class="w-full max-w-sm bg-white border-2 border-slate-900 text-slate-900 text-lg font-bold py-4 px-12 rounded-full shadow-md hover:bg-slate-50 transition-all duration-200 flex items-center justify-center gap-2">
                 <span>Read Daily Digests</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -100,10 +111,6 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                         <span>3 Lifelines available: Time Extension, 50:50, and Skip.</span>
                     </li>
-                    <li class="flex items-start gap-3 border-t border-slate-100 pt-2 text-amber-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                        <span>Report quiz discrepancies while submitting scores.</span>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -112,7 +119,7 @@
         <div id="email-screen" class="hidden text-center py-6 flex flex-col items-center gap-6 animate-fade-in">
             <div class="bg-white rounded-3xl shadow-xl p-8 border border-slate-100 w-full max-w-sm">
                 <h3 class="text-xl font-bold text-slate-900 mb-2">Almost there!</h3>
-                <p class="text-slate-500 text-sm mb-6">Enter your email to participate and save your progress.</p>
+                <p class="text-slate-500 text-sm mb-6">Enter your email to participate and track your score.</p>
                 <input type="email" id="user-email-input" placeholder="Enter your email address" class="w-full px-5 py-4 rounded-2xl border-2 border-slate-100 focus:border-blue-500 focus:outline-none mb-4 font-semibold text-slate-800 transition-colors">
                 <button onclick="handleEmailSubmit()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 rounded-2xl shadow-lg transition-all transform active:scale-95">Continue to Selection</button>
                 <button onclick="showStartScreen()" class="mt-4 text-slate-400 font-bold hover:text-slate-900 transition flex items-center justify-center gap-2 w-full">Cancel</button>
@@ -121,13 +128,11 @@
 
         <!-- Selection Screen -->
         <div id="selection-screen" class="hidden text-center py-6 flex flex-col items-center gap-6 animate-fade-in">
-            <button onclick="startQuiz('daily')" class="w-full max-w-sm bg-slate-900 hover:bg-slate-800 text-white text-lg font-bold py-5 px-12 rounded-3xl shadow-xl transition-all duration-200 transform hover:scale-105 flex flex-col items-center">
-                <span class="text-xl">Daily Quiz</span>
-                <span class="text-xs font-normal opacity-70 mt-1 uppercase tracking-widest">Based on Daily Digests</span>
+            <button onclick="startQuiz('jan6')" class="w-full max-w-sm bg-blue-600 hover:bg-blue-700 text-white text-lg font-bold py-6 px-12 rounded-3xl shadow-xl transition-all duration-200 transform hover:scale-105">
+                <span class="text-xl">6 January 2026</span>
             </button>
-            <button onclick="startQuiz('maxims')" class="w-full max-w-sm bg-blue-700 hover:bg-blue-800 text-white text-lg font-bold py-5 px-12 rounded-3xl shadow-xl transition-all duration-200 transform hover:scale-105 flex flex-col items-center">
-                <span class="text-xl">Legal Maxims Quiz</span>
-                <span class="text-xs font-normal opacity-70 mt-1 uppercase tracking-widest">Master Judicial Principles</span>
+            <button onclick="startQuiz('jan5')" class="w-full max-w-sm bg-slate-900 hover:bg-slate-800 text-white text-lg font-bold py-6 px-12 rounded-3xl shadow-xl transition-all duration-200 transform hover:scale-105">
+                <span class="text-xl">5 January 2026</span>
             </button>
             <button onclick="showStartScreen()" class="mt-4 text-slate-400 font-bold hover:text-slate-900 transition flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
@@ -170,36 +175,36 @@
         </div>
 
         <!-- Result Screen -->
-        <div id="result-screen" class="hidden bg-white rounded-3xl shadow-2xl p-10 text-center border border-slate-100">
+        <div id="result-screen" class="hidden bg-white rounded-3xl shadow-2xl p-10 text-center border border-slate-100 animate-fade-in">
             <h2 class="serif text-4xl font-bold text-slate-900 mb-2">Results</h2>
-            <p id="result-subtitle" class="text-slate-500 mb-6">Performance Summary</p>
+            <p id="result-subtitle" class="text-slate-500 mb-6 text-sm">Performance Summary</p>
+            
             <div id="verify-email-badge" class="inline-block px-3 py-1 rounded-full bg-slate-100 text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-6">
                 Verification: <span id="display-email" class="text-slate-800"></span>
             </div>
+
             <div class="bg-slate-50 rounded-2xl p-8 mb-8 border border-slate-100 flex flex-col items-center">
                 <div class="text-6xl font-black text-slate-900 mb-2" id="final-score-text">0</div>
                 <div class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-8">Total Points Earned</div>
-                <a href="https://citecase.in/register" target="_blank" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 px-6 rounded-2xl shadow-lg transition-all duration-200 flex items-center justify-center gap-2 group">
+                <a href="https://citecase.in/register" target="_blank" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 px-6 rounded-2xl shadow-lg transition-all duration-200 flex items-center justify-center gap-2 group mb-4">
                     <span>Subscribe CiteCase.in</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
                 </a>
             </div>
+
             <div class="space-y-4 mb-6">
                 <button id="submit-score-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-2xl shadow-lg transition-all duration-200 flex items-center justify-center gap-2 group">
-                    <span>Submit Score to Leaderboard</span>
+                    <span>Submit Your Score</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
                 </button>
-                <button onclick="showStartScreen()" class="text-slate-400 font-bold hover:text-slate-900 transition underline underline-offset-4 block mx-auto">Main Menu</button>
+                <button onclick="showStartScreen()" class="text-slate-400 font-bold hover:text-slate-900 transition underline underline-offset-4 block mx-auto text-sm">Main Menu</button>
             </div>
             <p class="text-[11px] text-slate-500 leading-relaxed max-w-sm mx-auto">We may contact you on email once you reach 100 points to give you FREE limited access to our Supreme Court Daily Digests.</p>
         </div>
     </main>
 
-    <!-- Tawk.to Hidden Container -->
-    <div id='tawk_67614df349e2fd8dfef95e95' style="display:none !important;"></div>
-
     <script>
-        const dailyQuizData = [
+        const quizDataJan5 = [
             {
                 question: "In NAK Engineering Company v. Tarun Keshrichand Shah, how is a 'necessary party' defined?",
                 options: ["Presence is desirable but optional.", "A party without whom no order can be made effectively.", "The plaintiff who institutes the suit.", "A third party affected by the decree."],
@@ -262,66 +267,66 @@
             }
         ];
 
-        const maximsQuizData = [
+        const quizDataJan6 = [
             {
-                question: "Which legal maxim translates to 'The law is hard, but it is the law'?",
-                options: ["Lex specialis derogat legi generali", "Dura lex sed lex", "Ubi jus, ii remedium", "Vox Populi, Vox Dei"],
+                question: "In Karnataka Lokayuktha vs Chandrashekar, what did the SC rule regarding departmental exoneration and criminal prosecution?",
+                options: ["Departmental exoneration automatically results in quashing criminal proceedings.", "They are parallel proceedings and one doesn't ipso facto quash the other.", "Criminal prosecution must conclude before a departmental enquiry begins.", "The Enquiry Officer's finding is binding on the Criminal Court."],
                 correct: 1,
-                explanation: "Para 9: Dura lex sed lex means the law is hard, but it must be followed regardless of unpleasant consequences."
+                explanation: "Para 1, 12: Disciplinary proceedings and criminal prosecution are parallel proceedings and exoneration in one doesn't ipso facto result in quashing the other."
             },
             {
-                question: "What is the meaning of the maxim 'Ut res magis valeat quam pereat'?",
-                options: ["Ignorance of law is no excuse.", "It is better for a thing to have effect than to be void.", "No one should be a judge in their own cause.", "A specific law overrides a general law."],
+                question: "According to S. Nagesh v. Shobha S. Aradhya, what must happen before a Court takes cognizance of a belated NI Act complaint?",
+                options: ["The accused must be summoned for a summary hearing.", "A fine must be deposited by the complainant.", "Satisfaction regarding condonation of delay must precede the act of cognizance.", "Cognizance is taken first, and delay is condoned during the trial."],
+                correct: 2,
+                explanation: "Para 14: The power to take cognizance of a belated complaint is subject to satisfying the Court of sufficient cause; this condonation must precede cognizance."
+            },
+            {
+                question: "In Divjot Sekhon v. Punjab, the principle 'Rules of the game cannot be altered once the game has begun' was applied to:",
+                options: ["Only professional sports contracts.", "Legislative amendment processes.", "Admission processes to educational courses.", "Tax assessment procedures."],
+                correct: 2,
+                explanation: "Para 18: The principle is equally applicable to admission processes for educational courses like MBBS/BDS as it is to recruitment processes."
+            },
+            {
+                question: "Which of the following is NOT part of the 'Triple Tests' to determine if acts form the 'same transaction'?",
+                options: ["Unity of purpose and design.", "Proximity of time and place.", "Continuity of action.", "The identity of the defense counsel."],
+                correct: 3,
+                explanation: "Para 19-20: The triple tests are unity of purpose and design, proximity of time and place, and continuity of action."
+            },
+            {
+                question: "Per Kadirkhan Pathan v. MSWC, what is the mandatory requirement before instituting a departmental enquiry against a superannuated employee?",
+                options: ["The employee's written consent.", "A preliminary report from the CBI.", "Sanction from the Government.", "A general board resolution from the Corporation."],
+                correct: 2,
+                explanation: "Rule 27(2)(b)(i): The requirement of sanction from the Government prior to institution of departmental enquiry is mandatory for each case."
+            },
+            {
+                question: "Under the Indian Contract Act, as discussed in UV ARC v. Electrosteel Castings, a 'See to it' guarantee:",
+                options: ["Obligates the guarantor to enable the debtor to perform.", "Obligates the guarantor to ensure the debtor performs, being in breach if they fail.", "Is invalid under Indian law.", "Does not require a principal debt."],
                 correct: 1,
-                explanation: "Para 30: This principle means a legal text should be interpreted in a way that gives it force rather than makes it fail."
+                explanation: "Para 22: It refers to an obligation upon the guarantor to ensure that the principal debtor itself performs its own obligation."
             },
             {
-                question: "Which maxim is the foundation for the doctrine of Res Judicata?",
-                options: ["Actus curiae neminem gravabit", "Nemo debet bis vexari pro una et eadem causa", "Nemo dat quod non habet", "Suggestio falsi"],
+                question: "In Arvind Dham v. Directorate of Enforcement, the SC held that the Right to Speedy Trial under Article 21:",
+                options: ["Is eclipsed by the seriousness of PMLA offences.", "Does not apply to economic offences involving money laundering.", "Applies irrespective of the nature of the crime.", "Is only available if the sentence is more than 10 years."],
+                correct: 2,
+                explanation: "Para 16-18: The right to a speedy trial under Article 21 is not eclipsed by the nature of the offence and applies to all crimes."
+            },
+            {
+                question: "Regarding the enquiry report in disciplinary proceedings, who has the exclusive domain to find guilt?",
+                options: ["The Enquiry Officer.", "The High Court on the administrative side.", "The Disciplinary Authority.", "The Investigating Officer."],
+                correct: 2,
+                explanation: "Para 2: The enquiry report is not conclusive; the finding of guilt or otherwise is in the exclusive domain of the disciplinary authority."
+            },
+            {
+                question: "According to the SC in Arvind Dham, denying bail by categorizing all economic offences into one group is:",
+                options: ["A mandatory practice for judicial efficiency.", "Not advisable as activities and circumstances differ from case to case.", "Required under Section 45 of the PMLA.", "Only applicable to offences involving foreign exchange."],
                 correct: 1,
-                explanation: "Para 23: It means no man shall be vexed twice over the same cause of action, ensuring finality to a lis."
+                explanation: "Para 15: All economic offences cannot be classified into one group; categorizing them to deny bail is not advisable."
             },
             {
-                question: "The principle 'Contra proferentem' implies that an ambiguous term in a contract should be interpreted:",
-                options: ["Against the party who drafted/used it.", "In favor of the stronger party.", "Based on subsequent conduct only.", "As null and void immediately."],
-                correct: 0,
-                explanation: "Para 117-121: It means words of deeds are taken most strongly against the person who uses them, often protecting insured parties."
-            },
-            {
-                question: "What does 'Actus curiae neminem gravabit' signify in judicial proceedings?",
-                options: ["Judges must be fearless.", "The act of the Court shall prejudice no one.", "Litigation must come to an end.", "Specific law overrides general law."],
+                question: "In S. Nagesh v. Shobha S. Aradhya, the Court referenced which CPC rules to clarify the position on limitation-linked delay?",
+                options: ["Order VII Rule 11.", "Order XLI Rules 3A and 5(3).", "Order VIII Rule 1.", "Order IX Rule 13."],
                 correct: 1,
-                explanation: "Para 15: No party should suffer owing to an error, delay, or inadvertence attributable to the Court itself."
-            },
-            {
-                question: "The maxim 'Lex specialis derogat legi generali' means:",
-                options: ["A specific law overrides a general law.", "General law always prevails.", "Law does not compel the impossible.", "The voice of the people is divine."],
-                correct: 0,
-                explanation: "Para 31: Where a special enactment deals with a defined subject, it prevails over general law to the extent of any overlap."
-            },
-            {
-                question: "Which maxim states that 'Ignorance of the law is no excuse'?",
-                options: ["Nemo judex in causa sua", "Ignorantia juris non excusat", "Reformatio in peius", "Quod fieri debuit pro facto censetur"],
-                correct: 1,
-                explanation: "Para 32: Ignorantia juris non excusat means one cannot escape liability by claiming they didn't know the law."
-            },
-            {
-                question: "What is the legal meaning of 'Nemo dat quod non habet'?",
-                options: ["No one can transfer a better title than they possess.", "No one is above the law.", "No one can be a judge in their own cause.", "Justice delayed is justice denied."],
-                correct: 0,
-                explanation: "Para 40: It means a person cannot transfer a title or right to property that they themselves do not hold."
-            },
-            {
-                question: "The term 'Suggestio falsi' refers to:",
-                options: ["Suppression of truth.", "A false representation or misleading suggestion.", "A procedural error in court.", "A change for the worse."],
-                correct: 1,
-                explanation: "Para 23: Suggestio falsi is a false representation, while suppresio veri is the suppression of truth."
-            },
-            {
-                question: "Which maxim prevents a higher court from making a judgment worse for the person appealing it?",
-                options: ["Stare decisis", "No reformatio in peius", "Lex non cogit ad impossibilia", "Vox Populi"],
-                correct: 1,
-                explanation: "Para 32: Prohibition of reformatio in peius ensures an appellant is not placed in a worse position by filing an appeal."
+                explanation: "Para 14: Order XLI Rules 3A and 5(3) clarify that a proceeding doesn't figure as a regular matter until delay is condoned."
             }
         ];
 
@@ -359,16 +364,14 @@
             userEmail = emailValue;
             document.getElementById('display-email').innerText = userEmail;
             
-            // Sync with Tawk.to - Using visitor object for standard identification
             if (typeof Tawk_API !== 'undefined' && Tawk_API.setAttributes) {
-                Tawk_API.visitor = {
-                    name : emailValue,
-                    email : emailValue
-                };
-                Tawk_API.setAttributes({
-                    'email': emailValue,
-                    'status': 'Started Quiz'
-                }, function(error){});
+                try {
+                    Tawk_API.setAttributes({
+                        'name' : emailValue,
+                        'email': emailValue,
+                        'status': 'Started Quiz'
+                    }, function(error){});
+                } catch(e) {}
             }
 
             document.getElementById('email-screen').classList.add('hidden');
@@ -470,8 +473,14 @@
         }
 
         function startQuiz(type) {
-            activeQuizData = type === 'daily' ? dailyQuizData : maximsQuizData;
-            document.getElementById('result-subtitle').innerText = type === 'daily' ? 'Daily Quiz Performance' : 'Legal Maxims Quiz Performance';
+            if(type === 'jan6') {
+                activeQuizData = quizDataJan6;
+                document.getElementById('result-subtitle').innerText = '6 January 2026 Quiz Performance';
+            } else if(type === 'jan5') {
+                activeQuizData = quizDataJan5;
+                document.getElementById('result-subtitle').innerText = '5 January 2026 Quiz Performance';
+            }
+            
             currentQuestion = 0; score = 0; correctCount = 0;
             lifelinesUsed = { time: false, fiftyFifty: false, skip: false };
             document.getElementById('selection-screen').classList.add('hidden');
@@ -534,17 +543,20 @@
             const accuracy = Math.round((correctCount / activeQuizData.length) * 100);
             document.getElementById('final-score-text').innerText = score;
 
-            // Sync with Tawk.to
             if (typeof Tawk_API !== 'undefined' && Tawk_API.setAttributes) {
-                Tawk_API.setAttributes({
-                    'score': score,
-                    'accuracy': accuracy + '%',
-                    'status': 'Finished Quiz'
-                }, function(error){});
+                try {
+                    Tawk_API.setAttributes({
+                        'score': score,
+                        'accuracy': accuracy + '%',
+                        'status': 'Finished Quiz'
+                    }, function(error){});
+                } catch(e) {}
             }
 
-            const tallyUrl = `https://tally.so/r/5Bjpvv?email=${encodeURIComponent(userEmail)}&score=${score}&total=${activeQuizData.length}&accuracy=${accuracy}`;
-            document.getElementById('submit-score-btn').onclick = () => window.open(tallyUrl, '_blank');
+            document.getElementById('submit-score-btn').onclick = () => {
+                const tallyUrl = `https://tally.so/r/5Bjpvv?email=${encodeURIComponent(userEmail)}&score=${score}&total=${activeQuizData.length}&accuracy=${accuracy}`;
+                window.open(tallyUrl, '_blank');
+            };
         }
 
         window.onload = () => {
@@ -557,14 +569,8 @@
         };
     </script>
 
-    <!--Start of Tawk.to Script-->
+    <!-- Start of Tawk.to Script -->
     <script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date(); Tawk_API.embedded='tawk_67614df349e2fd8dfef95e95';
-    
-    Tawk_API.onLoad = function(){
-        Tawk_API.hideWidget();
-    };
-
     (function(){
     var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
     s1.async=true;
@@ -573,6 +579,6 @@
     s1.setAttribute('crossorigin','*');
     s0.parentNode.insertBefore(s1,s0);})();
     </script>
-    <!--End of Tawk.to Script-->
+    <!-- End of Tawk.to Script -->
 </body>
 </html>
