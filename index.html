@@ -138,10 +138,13 @@
 
         <!-- Selection Screen -->
         <div id="selection-screen" class="hidden text-center py-6 flex flex-col items-center gap-6 animate-fade-in">
-            <button onclick="startQuiz('jan6')" class="w-full max-w-sm bg-blue-600 hover:bg-blue-700 text-white text-lg font-bold py-6 px-12 rounded-3xl shadow-xl transition-all duration-200 transform hover:scale-105">
+            <button onclick="startQuiz('jan7')" class="w-full max-w-sm bg-blue-700 hover:bg-blue-800 text-white text-lg font-bold py-6 px-12 rounded-3xl shadow-xl transition-all duration-200 transform hover:scale-105">
+                7 January 2026
+            </button>
+            <button onclick="startQuiz('jan6')" class="w-full max-w-sm bg-slate-900 hover:bg-slate-800 text-white text-lg font-bold py-6 px-12 rounded-3xl shadow-xl transition-all duration-200 transform hover:scale-105">
                 6 January 2026
             </button>
-            <button onclick="startQuiz('jan5')" class="w-full max-w-sm bg-slate-900 hover:bg-slate-800 text-white text-lg font-bold py-6 px-12 rounded-3xl shadow-xl transition-all duration-200 transform hover:scale-105">
+            <button onclick="startQuiz('jan5')" class="w-full max-w-sm bg-slate-800 hover:bg-slate-700 text-white text-lg font-bold py-6 px-12 rounded-3xl shadow-xl transition-all duration-200 transform hover:scale-105">
                 5 January 2026
             </button>
             <button onclick="showStartScreen()" class="mt-4 text-slate-400 font-bold hover:text-slate-900 transition flex items-center gap-2">
@@ -232,7 +235,6 @@
     </main>
 
     <script>
-        // Updated password as per user request
         const CORRECT_PASSWORD = "citecase";
         let activeQuizData = [];
         let currentQuizDateLabel = "";
@@ -240,66 +242,66 @@
         let timerSeconds = 30, timerInterval = null;
         let lifelinesUsed = { time: false, fiftyFifty: false, skip: false };
 
-        const quizDataJan5 = [
+        const quizDataJan7 = [
             {
-                question: "In NAK Engineering Company v. Tarun Keshrichand Shah, how is a 'necessary party' defined?",
-                options: ["Presence is desirable but optional.", "A party without whom no order can be made effectively.", "The plaintiff who institutes the suit.", "A third party affected by the decree."],
+                question: "In Jan De Nul Dredging India v. Tuticorin Port Trust, what is the scope of Section 37 Appellate power?",
+                options: ["Ordinary court of appeal reviewing merits.", "Limited to finding if the Section 34 court acted within its limits.", "Reappraisal of evidence to record contrary findings.", "Authority to touch any award regardless of legality."],
                 correct: 1,
-                explanation: "Para 39-40: A necessary party is one without whom no order can be made effectively."
+                explanation: "Para 37: The Appellate Court under Section 37 has no authority to consider the matter on merits or sit as an ordinary court of appeal."
             },
             {
-                question: "According to Bhadra International vs Airports Authority, how can arbitrator ineligibility under Section 12(5) be waived?",
-                options: ["By oral agreement in the hearing.", "By filing a claim without initial objection.", "Only by an express agreement in writing.", "By appearing at the first session."],
-                correct: 2,
-                explanation: "Para 89-90: The Court held ineligibility can ONLY be waived via an express agreement in writing."
-            },
-            {
-                question: "In judicial disciplinary proceedings, what is the determinative factor for misconduct?",
-                options: ["Correctness of the verdict.", "Whether the Judge's order was wrong.", "The conduct of the Officer in question.", "The volume of appeals filed."],
-                correct: 2,
-                explanation: "Para 34: It is not the correctness of the verdict but the conduct of the Officer which determines misconduct."
-            },
-            {
-                question: "Under UAPA Section 43D(5), what does 'prima facie true' mandate?",
-                options: ["Full evaluation of evidence.", "A threshold inquiry that is neither perfunctory nor adjudicatory.", "Conducting a mini-trial.", "Proof beyond reasonable doubt."],
+                question: "According to the SC (2026 INSC 33), can Section 5 of the Limitation Act apply to quasi-judicial bodies like the CLB?",
+                options: ["Yes, automatically under Section 433.", "Only if specifically empowered by the statute.", "Always, under Regulation 44's inherent power.", "Only for minor delays under 30 days."],
                 correct: 1,
-                explanation: "Para 81-82: The Court must examine if the prosecution material, taken at face value, discloses essential statutory ingredients."
+                explanation: "Para 160: Section 5 applies only to 'courts' and not to quasi-judicial bodies unless they are specifically empowered."
             },
             {
-                question: "Which maxim signifies 'standing by what is decided' for legal stability?",
-                options: ["Dominus Litis", "Ex proprio vigore", "Stare decisis et non quieta movere", "Interest reipublicae ut sit findis litium"],
+                question: "In Regenta Hotels v. Hotel Grand Centre Point, when is an arbitral proceeding deemed 'commenced'?",
+                options: ["Date of filing a Section 9 petition.", "Date of filing a Section 11 petition.", "Solely upon receipt of request to refer dispute to arbitration (S. 21).", "Date of the first hearing before the Tribunal."],
                 correct: 2,
-                explanation: "Para 78: 'Stare decisis...' signifies the need for stability and predictability in law."
+                explanation: "Para 23: Commencement is defined exclusively under Section 21 by receipt of a request to refer the dispute."
             },
             {
-                question: "In Bhagheeratha Engineering Ltd vs State of Kerala, Section 21 notice is primarily for:",
-                options: ["Mandatory start of every arbitration.", "Waiving procedural errors.", "Determining commencement for reckoning limitation.", "Appointing the lead counsel."],
-                correct: 2,
-                explanation: "Para 16: Section 21 is concerned with determining commencement for the purpose of reckoning limitation."
-            },
-            {
-                question: "Regarding delegated legislation and tax levy, which statement is CORRECT?",
-                options: ["Power to exempt is a power to tax.", "Executive can enlarge taxation via machinery provisions.", "The power to exempt is NOT a power to tax.", "A delegate can do indirectly what it cannot do directly."],
-                correct: 2,
-                explanation: "Para 55: The Court held that the power to exempt is not a power to tax."
-            },
-            {
-                question: "In Subhash Aggarwal vs Mahender Pal Chhabra, 'readiness and willingness' is construed:",
-                options: ["Via a strict straitjacket formula.", "With respect to facts and circumstances of each case.", "Only based on bank statements.", "Only when the defendant is at fault."],
+                question: "Under Arbitration Rule 9(4), what happens if arbitral proceedings don't commence within 90 days of an interim order?",
+                options: ["The Court issues a warning.", "The interim order stands vacated automatically.", "The arbitration is dismissed.", "The respondent must pay a fine."],
                 correct: 1,
-                explanation: "Para 6: There is no straitjacket formula; it depends on specific facts of each case."
+                explanation: "Para 27: Rule 9(4) provides that upon failure to commence within 3 months, the interim order stands vacated automatically."
             },
             {
-                question: "How does trial delay impact UAPA bail applications under the 2026 ruling?",
-                options: ["It is a trump card for automatic bail.", "It is ignored for national security.", "It serves as a trigger for heightened judicial scrutiny under Article 21.", "It only applies to juvenile cases."],
-                correct: 2,
-                explanation: "Para 56-57: Delay triggers heightened scrutiny to balance the offense's gravity with personal liberty."
-            },
-            {
-                question: "The principle of 'Dominus Litis' means:",
-                options: ["The Judge controls the trial speed.", "Plaintiffs choose their adversaries and do so at their own risk.", "The State must provide a lawyer.", "All parties have equal costs."],
+                question: "In Abhay Kumar Patel v. Bihar, why was the 2022 Amendment Rule 8(5) held impermissible?",
+                options: ["State lacks power to amend rules under Art. 309.", "It attempted to rewrite rules of a game already begun.", "Contractual experience can never be a criteria.", "The State did not publish it in the official gazette."],
                 correct: 1,
-                explanation: "Page 2: Plaintiffs who institute the suit are dominus litis and choose their adversaries."
+                explanation: "Para 39: Retrospective legislation cannot arbitrarily disrupt a selection process where a provisional merit list is out."
+            },
+            {
+                question: "Regarding auctions (2026 INSC 22), is the expectation of a higher bid a valid reason to discard the highest bid?",
+                options: ["Yes, to protect public revenue.", "No, as long as the bid is above the reserve price.", "Only if the auction was held without a reserve price.", "Yes, at the absolute discretion of the State."],
+                correct: 1,
+                explanation: "Para 32: Merely expecting a higher bid in a subsequent auction is not a valid reason to discard a valid highest bid."
+            },
+            {
+                question: "In ULC Act cases (2026 INSC 21), what does 'vesting' of land with the State connote?",
+                options: ["Transfer of de facto possession.", "De jure vesting of title or interests.", "Physical eviction of current occupants.", "Automatic demolition of structures."],
+                correct: 1,
+                explanation: "Para 17: Vesting connotes acquisition of title (de jure); transfer of possession (de facto) requires explicit steps."
+            },
+            {
+                question: "When can the 'Common or Trade Parlance' test be used for tax classification disputes?",
+                options: ["As a measure of first resort.", "Only in a state of statutory silence where intent is unexpressed.", "To override explicit definitions in the Act.", "To reclassify goods based on marketing names."],
+                correct: 1,
+                explanation: "Para 66: It is only in a state of statutory silence, where legislative intent remains unexpressed, that courts resort to this test."
+            },
+            {
+                question: "What is the true principle of 'Promissory Estoppel' according to IFGL Refractories (2026 INSC 18)?",
+                options: ["Promises are only binding if there's a written contract.", "An unequivocal promise intended to be acted upon is binding if acting on it makes it inequitable to go back.", "The State can always go back on promises in public interest.", "It only applies if there's a pre-existing relationship."],
+                correct: 1,
+                explanation: "Para 115: A clear and unequivocal promise intended to create legal relations is binding if acted upon."
+            },
+            {
+                question: "Per Union of India v. G. Kiran (2026), what happens if a reserved candidate uses 'Relaxed Standards' in the UPSC exam?",
+                options: ["They can still be considered for unreserved vacancies based on merit.", "They can only be considered for vacancies in their category.", "They are disqualified from the selection.", "They receive a higher rank automatically."],
+                correct: 1,
+                explanation: "Para 24: If any 'Relaxed Standard' is availed, allocation will be against the vacancy of their specific category."
             }
         ];
 
@@ -363,6 +365,69 @@
                 options: ["Order VII Rule 11.", "Order XLI Rules 3A and 5(3).", "Order VIII Rule 1.", "Order IX Rule 13."],
                 correct: 1,
                 explanation: "Para 14: Order XLI Rules 3A and 5(3) clarify that a proceeding doesn't figure as a regular matter until delay is condoned."
+            }
+        ];
+
+        const quizDataJan5 = [
+            {
+                question: "In NAK Engineering Company v. Tarun Keshrichand Shah, how is a 'necessary party' defined?",
+                options: ["Presence is desirable but optional.", "A party without whom no order can be made effectively.", "The plaintiff who institutes the suit.", "A third party affected by the decree."],
+                correct: 1,
+                explanation: "Para 39-40: A necessary party is one without whom no order can be made effectively."
+            },
+            {
+                question: "According to Bhadra International vs Airports Authority, how can arbitrator ineligibility under Section 12(5) be waived?",
+                options: ["By oral agreement in the hearing.", "By filing a claim without initial objection.", "Only by an express agreement in writing.", "By appearing at the first session."],
+                correct: 2,
+                explanation: "Para 89-90: The Court held ineligibility can ONLY be waived via an express agreement in writing."
+            },
+            {
+                question: "In judicial disciplinary proceedings, what is the determinative factor for misconduct?",
+                options: ["Correctness of the verdict.", "Whether the Judge's order was wrong.", "The conduct of the Officer in question.", "The volume of appeals filed."],
+                correct: 2,
+                explanation: "Para 34: It is not the correctness of the verdict but the conduct of the Officer which determines misconduct."
+            },
+            {
+                question: "Under UAPA Section 43D(5), what does 'prima facie true' mandate?",
+                options: ["Full evaluation of evidence.", "A threshold inquiry that is neither perfunctory nor adjudicatory.", "Conducting a mini-trial.", "Proof beyond reasonable doubt."],
+                correct: 1,
+                explanation: "Para 81-82: The Court must examine if the prosecution material, taken at face value, discloses essential statutory ingredients."
+            },
+            {
+                question: "Which maxim signifies 'standing by what is decided' for legal stability?",
+                options: ["Dominus Litis", "Ex proprio vigore", "Stare decisis et non quieta movere", "Interest reipublicae ut sit findis litium"],
+                correct: 2,
+                explanation: "Para 78: 'Stare decisis...' signifies the need for stability and predictability in law."
+            },
+            {
+                question: "In Bhagheeratha Engineering Ltd vs State of Kerala, Section 21 notice is primarily for:",
+                options: ["Mandatory start of every arbitration.", "Waiving procedural errors.", "Determining commencement for reckoning limitation.", "Appointing the lead counsel."],
+                correct: 2,
+                explanation: "Para 16: Section 21 is concerned with determining commencement for the purpose of reckoning limitation."
+            },
+            {
+                question: "Regarding delegated legislation and tax levy, which statement is CORRECT?",
+                options: ["Power to exempt is a power to tax.", "Executive can enlarge taxation via machinery provisions.", "The power to exempt is NOT a power to tax.", "A delegate can do indirectly what it cannot do directly."],
+                correct: 2,
+                explanation: "Para 55: The Court held that the power to exempt is not a power to tax."
+            },
+            {
+                question: "In Subhash Aggarwal vs Mahender Pal Chhabra, 'readiness and willingness' is construed:",
+                options: ["Via a strict straitjacket formula.", "With respect to facts and circumstances of each case.", "Only based on bank statements.", "Only when the defendant is at fault."],
+                correct: 1,
+                explanation: "Para 6: There is no straitjacket formula; it depends on specific facts of each case."
+            },
+            {
+                question: "How does trial delay impact UAPA bail applications under the 2026 ruling?",
+                options: ["It is a trump card for automatic bail.", "It is ignored for national security.", "It serves as a trigger for heightened judicial scrutiny under Article 21.", "It only applies to juvenile cases."],
+                correct: 2,
+                explanation: "Para 56-57: Delay triggers heightened scrutiny to balance the offense's gravity with personal liberty."
+            },
+            {
+                question: "The principle of 'Dominus Litis' means:",
+                options: ["The Judge controls the trial speed.", "Plaintiffs choose their adversaries and do so at their own risk.", "The State must provide a lawyer.", "All parties have equal costs."],
+                correct: 1,
+                explanation: "Page 2: Plaintiffs who institute the suit are dominus litis and choose their adversaries."
             }
         ];
 
@@ -447,7 +512,11 @@
             const q = activeQuizData[currentQuestion];
             const buttons = Array.from(document.getElementById('options-container').getElementsByTagName('button'));
             let incorrectIndices = q.options.map((_, i) => i).filter(i => i !== q.correct);
-            const keepIndices = [q.correct, incorrectIndices[Math.floor(Math.random() * incorrectIndices.length)]];
+            
+            // Randomly pick one incorrect index to keep
+            const keepIncorrectIdx = incorrectIndices[Math.floor(Math.random() * incorrectIndices.length)];
+            const keepIndices = [q.correct, keepIncorrectIdx];
+            
             buttons.forEach((btn, idx) => {
                 if (!keepIndices.includes(idx)) {
                     btn.style.opacity = '0.2';
@@ -465,10 +534,23 @@
         }
 
         function startQuiz(type) {
-            activeQuizData = type === 'jan6' ? quizDataJan6 : quizDataJan5;
-            currentQuizDateLabel = type === 'jan6' ? '6 January 2026' : '5 January 2026';
+            if (type === 'jan7') {
+                activeQuizData = quizDataJan7;
+                currentQuizDateLabel = '7 January 2026';
+            } else if (type === 'jan6') {
+                activeQuizData = quizDataJan6;
+                currentQuizDateLabel = '6 January 2026';
+            } else {
+                activeQuizData = quizDataJan5;
+                currentQuizDateLabel = '5 January 2026';
+            }
+            
             currentQuestion = 0; score = 0; correctCount = 0;
             lifelinesUsed = { time: false, fiftyFifty: false, skip: false };
+            
+            // Reset lifeline buttons visuals
+            document.querySelectorAll('.lifeline-btn').forEach(btn => btn.disabled = false);
+            
             document.getElementById('selection-screen').classList.add('hidden');
             document.getElementById('quiz-screen').classList.remove('hidden');
             showQuestion();
@@ -541,6 +623,11 @@
             document.getElementById('lifeline-5050').onclick = use5050Lifeline;
             document.getElementById('lifeline-skip').onclick = useSkipLifeline;
             document.getElementById('rules-toggle-btn').onclick = toggleRules;
+            
+            // Allow "Enter" to submit password
+            document.getElementById('quiz-password-input').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') handlePasswordSubmit();
+            });
         };
     </script>
 </body>
